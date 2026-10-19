@@ -59,17 +59,11 @@ Aspectos que no deben faltar: ${info.enfoque}.
 Descripción del usuario:
 """
 ${descripcion}
-"""`;
-}
-  return `Tipo de contrato: ${info.nombre}.
-Aspectos que no deben faltar: ${info.enfoque}.
-
-Descripción del usuario:
-"""
-${descripcion}
 """
 
 Recuerda: el contrato debe estar escrito en el mismo idioma que la descripción del usuario.`;
+}
+
 // ---------- Acciones de edición ----------
 
 export const ACCIONES = {
