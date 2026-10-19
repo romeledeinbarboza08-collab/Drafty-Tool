@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página no encontrada — Drafty</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <style>
+    .notfound {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: var(--sp-6);
+      text-align: center;
+    }
+    .notfound__code {
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .notfound h1 {
+      margin: var(--sp-4) 0 var(--sp-2);
+      font-size: var(--fs-2xl);
+    }
+    .notfound p {
+      margin-bottom: var(--sp-8);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="notfound">
+    <div>
+      <a href="/" class="logo" style="margin-bottom: 40px;">
+        <img class="logo__mark" src="/assets/img/logo.svg" alt="">
+        <span>draft<span class="logo__dot">y</span></span>
+      </a>
+      <div class="notfound__code">404</div>
+      <h1>Esta página no existe</h1>
+      <p>Puede que el enlace esté mal escrito o que la página se haya movido.</p>
+      <a href="/" class="btn btn--primary btn--lg">Volver al inicio</a>
+    </div>
+  </main>
+</body>
+</html>

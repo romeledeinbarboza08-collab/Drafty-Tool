@@ -1,0 +1,74 @@
+/* =========================================================
+   Drafty - Impresión / PDF
+   Cuando el usuario da "Descargar PDF" el navegador imprime la
+   página. Estas reglas esconden toda la interfaz y dejan solo
+   el contrato, con márgenes de documento legal.
+   ========================================================= */
+
+@page {
+  size: letter;
+  margin: 2.5cm 2.2cm;
+}
+
+body {
+  background: #ffffff !important;
+}
+
+.app-header,
+.sidebar,
+.ai-toolbar,
+.toast,
+.gen-status,
+.paper-note,
+#view-new,
+#view-error {
+  display: none !important;
+}
+
+.app-body {
+  display: block !important;
+  min-height: 0 !important;
+}
+
+.workspace {
+  padding: 0 !important;
+}
+
+.paper {
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-size: 11.5pt !important;
+  line-height: 1.6 !important;
+}
+
+.paper h1 {
+  font-size: 14pt !important;
+}
+
+.paper h2 {
+  font-size: 11.5pt !important;
+  break-after: avoid;
+}
+
+.paper p,
+.paper li {
+  orphans: 3;
+  widows: 3;
+}
+
+/* Los datos pendientes se imprimen como texto normal subrayado */
+.ph {
+  background: none !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  text-decoration: underline;
+}
+
+.ai-updated {
+  background: none !important;
+  box-shadow: none !important;
+}

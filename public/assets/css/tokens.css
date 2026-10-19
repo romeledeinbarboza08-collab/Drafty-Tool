@@ -1,0 +1,91 @@
+/* =========================================================
+   Drafty - Design tokens
+   Todos los colores, tamaños y espacios viven aquí.
+   Si se cambia la marca, solo se toca este archivo.
+   ========================================================= */
+
+:root {
+  /* Marca */
+  --navy-900: #0a1530;
+  --navy-800: #0f1e3d;
+  --navy-700: #1a2c52;
+  --navy-600: #2a3f6b;
+
+  --coral-600: #d9502b;
+  --coral-500: #f2643d;
+  --coral-100: #fde8e1;
+  --coral-50:  #fff4f0;
+
+  --blue-500: #3b6fd8;
+  --blue-50:  #eef3fd;
+  --green-500: #1f9d6b;
+  --green-50:  #e8f6ef;
+  --amber-500: #d98b0b;
+  --amber-50:  #fdf4e3;
+
+  /* Neutros */
+  --gray-900: #1b2333;
+  --gray-700: #3d4759;
+  --gray-600: #5b6578;
+  --gray-500: #7a8396;
+  --gray-300: #c9ced8;
+  --gray-200: #e3e6ec;
+  --gray-100: #eef0f4;
+  --gray-50:  #f7f8fa;
+  --white:    #ffffff;
+
+  /* Roles (lo que usan los componentes) */
+  --bg:            var(--gray-50);
+  --surface:       var(--white);
+  --border:        var(--gray-200);
+  --text:          var(--gray-900);
+  --text-muted:    var(--gray-600);
+  --text-subtle:   var(--gray-500);
+  --primary:       var(--coral-500);
+  --primary-hover: var(--coral-600);
+  --heading:       var(--navy-800);
+
+  /* Tipografía */
+  --font-sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  --fs-xs:   0.75rem;   /* 12 */
+  --fs-sm:   0.875rem;  /* 14 */
+  --fs-base: 1rem;      /* 16 */
+  --fs-lg:   1.125rem;  /* 18 */
+  --fs-xl:   1.375rem;  /* 22 */
+  --fs-2xl:  1.75rem;   /* 28 */
+  --fs-3xl:  2.25rem;   /* 36 */
+  --fs-4xl:  3.25rem;   /* 52 */
+
+  /* Espaciado (escala de 4px) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Bordes y sombras */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 30, 61, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 30, 61, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 30, 61, 0.12);
+
+  /* Layout */
+  --container: 1140px;
+  --header-h: 68px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor — Drafty</title>
+  <meta name="description" content="Genera y edita tu contrato con IA.">
+  <meta name="theme-color" content="#0f1e3d">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/print.css" media="print">
+</head>
+<body class="app">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M13 7l4 4"/><path d="M18 3v3M16.5 4.5h3M20 9v2M19 10h2"/></symbol>
+      <symbol id="i-shorten" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"/></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h11"/></symbol>
+      <symbol id="i-spell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l4-10 4 10M5.5 11.5h5"/><path d="M13 17l3 3 5-6"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ================= BARRA SUPERIOR ================= -->
+  <header class="app-header">
+    <div class="app-header__left">
+      <button type="button" class="icon-btn app-header__menu" id="toggle-sidebar" aria-label="Mis contratos">
+        <svg><use href="#i-menu"/></svg>
+      </button>
+      <a href="/" class="logo" aria-label="Drafty, inicio">
+        <img class="logo__mark" src="/assets/img/logo.svg" alt="">
+        <span>draft<span class="logo__dot">y</span></span>
+      </a>
+      <span class="app-header__divider" aria-hidden="true"></span>
+      <div class="doc-meta">
+        <label for="doc-title" class="sr-only">Título del contrato</label>
+        <input id="doc-title" class="doc-meta__title" type="text" maxlength="120" placeholder="Nuevo contrato" disabled>
+        <span id="save-status" class="doc-meta__status" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div class="app-header__actions">
+      <button type="button" class="btn btn--ghost needs-doc" id="btn-copy">
+        <svg><use href="#i-copy"/></svg><span>Copiar</span>
+      </button>
+      <button type="button" class="btn btn--outline needs-doc" id="btn-pdf">
+        <svg><use href="#i-download"/></svg><span>Descargar PDF</span>
+      </button>
+      <button type="button" class="btn btn--primary" id="btn-new">
+        <svg><use href="#i-plus"/></svg><span>Nuevo</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-body">
+    <!-- ================= LISTA DE CONTRATOS ================= -->
+    <aside class="sidebar" id="sidebar">
+      <button type="button" class="btn btn--dark sidebar__new" id="btn-new-side">
+        <svg><use href="#i-plus"/></svg> Nuevo contrato
+      </button>
+
+      <div class="sidebar__head">
+        <span>Mis contratos</span>
+        <span class="sidebar__count" id="list-count">0</span>
+      </div>
+
+      <ul class="contract-list" id="contract-list"></ul>
+
+      <div class="sidebar__empty" id="list-empty">
+        <svg><use href="#i-file"/></svg>
+        <p>Aún no tienes contratos. Los que generes aparecerán aquí.</p>
+      </div>
+
+      <p class="sidebar__note">Tus contratos se guardan solo en este navegador.</p>
+    </aside>
+
+    <!-- ================= ÁREA PRINCIPAL ================= -->
+    <main class="workspace">
+
+      <!-- Nuevo contrato -->
+      <section class="new-view" id="view-new" hidden>
+        <div class="new-view__inner">
+          <span class="badge"><svg><use href="#i-spark"/></svg> Nuevo contrato</span>
+          <h1>¿Qué contrato necesitas?</h1>
+          <p>Elige el tipo y describe el acuerdo. Mientras más detalles des, más completo sale el borrador.</p>
+
+          <form class="prompt-box" id="new-form" novalidate>
+            <div class="prompt-box__chips" role="group" aria-label="Tipo de contrato">
+              <button type="button" class="chip" data-type="servicios" aria-pressed="true">Servicios</button>
+              <button type="button" class="chip" data-type="pago" aria-pressed="false">Pago</button>
+              <button type="button" class="chip" data-type="nda" aria-pressed="false">Confidencialidad (NDA)</button>
+              <button type="button" class="chip" data-type="mantenimiento" aria-pressed="false">Mantenimiento</button>
+              <button type="button" class="chip" data-type="contratista" aria-pressed="false">Contratista</button>
+              <button type="button" class="chip" data-type="personalizado" aria-pressed="false">Personalizado</button>
+            </div>
+            <label for="new-prompt" class="sr-only">Describe tu contrato</label>
+            <textarea id="new-prompt" maxlength="2000"></textarea>
+            <div class="prompt-box__footer">
+              <span class="prompt-box__counter" id="new-counter">0 / 2000</span>
+              <button type="submit" class="btn btn--primary btn--lg" id="new-generate" disabled>
+                <svg><use href="#i-spark"/></svg> Generar contrato
+              </button>
+            </div>
+          </form>
+
+          <ul class="tips">
+            <li><strong>Partes:</strong> quiénes firman y cómo se llaman.</li>
+            <li><strong>Dinero:</strong> montos, moneda y cuándo se paga.</li>
+            <li><strong>Tiempo:</strong> fechas de inicio, entregas y duración.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Documento -->
+      <section class="doc-view" id="view-doc" hidden>
+        <div class="gen-status" id="gen-status" hidden>
+          <span class="spinner" aria-hidden="true"></span>
+          Redactando tu contrato…
+        </div>
+
+        <article class="paper" id="doc" contenteditable="false" spellcheck="true" aria-label="Contrato"></article>
+
+        <p class="paper-note">
+          Borrador generado con IA. Revísalo con un profesional antes de firmarlo.
+          Los textos entre <span class="ph">[corchetes]</span> son datos que faltan por completar.
+        </p>
+      </section>
+
+      <!-- Error -->
+      <section class="error-view" id="view-error" hidden>
+        <div class="error-view__box">
+          <span class="icon-box"><svg><use href="#i-alert"/></svg></span>
+          <h2>No pudimos generar el contrato</h2>
+          <p id="error-message"></p>
+          <div class="error-view__actions">
+            <button type="button" class="btn btn--outline" id="btn-back">Volver</button>
+            <button type="button" class="btn btn--primary" id="btn-retry">Intentar de nuevo</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= BARRA FLOTANTE DE IA ================= -->
+  <div class="ai-toolbar" id="ai-toolbar" role="toolbar" aria-label="Editar con IA" hidden>
+    <button type="button" data-action="mejorar"><svg><use href="#i-wand"/></svg>Mejorar</button>
+    <button type="button" data-action="acortar"><svg><use href="#i-shorten"/></svg>Acortar</button>
+    <button type="button" data-action="alargar"><svg><use href="#i-expand"/></svg>Alargar</button>
+    <button type="button" data-action="corregir"><svg><use href="#i-spell"/></svg>Corregir</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>

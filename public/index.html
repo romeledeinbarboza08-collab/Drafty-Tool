@@ -2,10 +2,408 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Drafty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drafty — Contracts without the complexity</title>
+  <meta name="description" content="Genera, edita y descarga contratos profesionales con IA en segundos. Acuerdos de servicio, NDA, pagos y más.">
+  <meta name="theme-color" content="#0f1e3d">
+
+  <meta property="og:title" content="Drafty — Generador de contratos con IA">
+  <meta property="og:description" content="Describe tu acuerdo y recibe un contrato completo, listo para revisar y descargar.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/landing.css">
 </head>
 <body>
-  <h1>Drafty</h1>
-  <p>Contracts without the complexity. — En construcción</p>
+
+  <!-- Iconos: se definen una vez y se reutilizan con <use href="#nombre"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+      <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6.5 15h4"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+      <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a4 4 0 0 0 5 5L21 13l-8 8-2.5-2.5 8-8M14.5 6.5L13 5l-8 8 2.5 2.5"/><path d="M3 21l4-4"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
+      <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M13 7l4 4"/><path d="M18 3v3M16.5 4.5h3M20 9v2M19 10h2"/></symbol>
+      <symbol id="i-shorten" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"/></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h11"/></symbol>
+      <symbol id="i-spell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l4-10 4 10M5.5 11.5h5"/><path d="M13 17l3 3 5-6"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M10 14l1-4 8-8 3 3-8 8-4 1z"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="/" class="logo" aria-label="Drafty, inicio">
+        <img class="logo__mark" src="/assets/img/logo.svg" alt="">
+        <span>draft<span class="logo__dot">y</span></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Principal">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#tipos">Tipos de contrato</a>
+        <a href="#edicion">Edición con IA</a>
+        <a href="#faq">Preguntas</a>
+      </nav>
+
+      <div class="site-header__actions">
+        <a href="/app.html" class="btn btn--ghost">Mis contratos</a>
+        <a href="#crear" class="btn btn--primary">Crear contrato</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="crear">
+      <div class="container hero__inner">
+        <span class="badge">
+          <svg><use href="#i-spark"/></svg>
+          Generador de contratos con IA
+        </span>
+
+        <h1>Contracts without the <span>complexity.</span></h1>
+
+        <p class="hero__lead">
+          Describe el acuerdo que necesitas y Drafty redacta un contrato completo en segundos.
+          Después lo ajustas, lo mejoras con IA y lo descargas en PDF.
+        </p>
+
+        <form class="prompt-box" id="prompt-form" novalidate>
+          <div class="prompt-box__chips" role="group" aria-label="Tipo de contrato">
+            <button type="button" class="chip" data-type="servicios" aria-pressed="true">Servicios</button>
+            <button type="button" class="chip" data-type="pago" aria-pressed="false">Pago</button>
+            <button type="button" class="chip" data-type="nda" aria-pressed="false">Confidencialidad (NDA)</button>
+            <button type="button" class="chip" data-type="mantenimiento" aria-pressed="false">Mantenimiento</button>
+            <button type="button" class="chip" data-type="contratista" aria-pressed="false">Contratista</button>
+            <button type="button" class="chip" data-type="personalizado" aria-pressed="false">Personalizado</button>
+          </div>
+
+          <label for="prompt" class="sr-only">Describe tu contrato</label>
+          <textarea
+            id="prompt"
+            name="prompt"
+            maxlength="2000"
+            placeholder="Ej: Contrato de diseño web entre mi empresa Café Brisa S.A. y la diseñadora Laura Mora. Pago de ₡450 000 en dos partes, entrega en 30 días."></textarea>
+
+          <div class="prompt-box__footer">
+            <span class="prompt-box__counter" id="counter">0 / 2000</span>
+            <button type="submit" class="btn btn--primary btn--lg" id="generate-btn" disabled>
+              <svg><use href="#i-spark"/></svg>
+              Generar contrato
+            </button>
+          </div>
+        </form>
+
+        <ul class="hero__trust">
+          <li><svg><use href="#i-check"/></svg> Gratis</li>
+          <li><svg><use href="#i-check"/></svg> Sin registro</li>
+          <li><svg><use href="#i-check"/></svg> Descarga en PDF</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= CÓMO FUNCIONA ================= -->
+    <section class="section" id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__eyebrow">Cómo funciona</span>
+          <h2>De una idea a un contrato en tres pasos</h2>
+          <p>No necesitas plantillas ni saber redactar en lenguaje legal.</p>
+        </div>
+
+        <div class="steps">
+          <article class="card step">
+            <span class="step__num">1</span>
+            <h3>Describe tu contrato</h3>
+            <p>Escribe en tus palabras qué tipo de acuerdo es, quiénes participan y los términos importantes.</p>
+            <div class="step__visual">
+              <div class="mini-input"><b>NDA</b> entre mi startup y un desarrollador externo, por 2 años…</div>
+            </div>
+          </article>
+
+          <article class="card step">
+            <span class="step__num">2</span>
+            <h3>Genera el borrador</h3>
+            <p>Drafty arma un contrato completo con cláusulas, partes, plazos y espacio para firmas.</p>
+            <div class="step__visual">
+              <div class="mini-lines"><span></span><span></span><span></span><span></span><span class="is-typing"></span></div>
+            </div>
+          </article>
+
+          <article class="card step">
+            <span class="step__num">3</span>
+            <h3>Revisa y personaliza</h3>
+            <p>Edita cualquier parte a mano o selecciona un texto y deja que la IA lo mejore por ti.</p>
+            <div class="step__visual mini-edit">
+              <div class="mini-lines"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="mini-toolbar"><i></i><i></i><i></i></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TIPOS ================= -->
+    <section class="section section--white" id="tipos">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__eyebrow">Tipos de contrato</span>
+          <h2>Un punto de partida para cada acuerdo</h2>
+          <p>Elige un tipo y Drafty adapta la estructura y las cláusulas a ese caso.</p>
+        </div>
+
+        <div class="types">
+          <button type="button" class="card type-card" data-type="servicios">
+            <span class="icon-box"><svg><use href="#i-briefcase"/></svg></span>
+            <h3>Acuerdos de servicio</h3>
+            <p>Define qué se entrega, las responsabilidades de cada parte, los plazos y cómo se paga.</p>
+            <span class="type-card__link">Generar acuerdo <svg><use href="#i-arrow"/></svg></span>
+          </button>
+
+          <button type="button" class="card type-card" data-type="pago">
+            <span class="icon-box icon-box--green"><svg><use href="#i-card"/></svg></span>
+            <h3>Acuerdos de pago</h3>
+            <p>Deja por escrito montos, cuotas, fechas de vencimiento y qué pasa si hay atrasos.</p>
+            <span class="type-card__link">Generar acuerdo <svg><use href="#i-arrow"/></svg></span>
+          </button>
+
+          <button type="button" class="card type-card" data-type="nda">
+            <span class="icon-box icon-box--navy"><svg><use href="#i-lock"/></svg></span>
+            <h3>Confidencialidad (NDA)</h3>
+            <p>Protege información sensible de tu negocio antes de compartirla con terceros.</p>
+            <span class="type-card__link">Generar NDA <svg><use href="#i-arrow"/></svg></span>
+          </button>
+
+          <button type="button" class="card type-card" data-type="mantenimiento">
+            <span class="icon-box icon-box--amber"><svg><use href="#i-tool"/></svg></span>
+            <h3>Acuerdos de mantenimiento</h3>
+            <p>Establece el soporte continuo, tiempos de respuesta y lo que incluye cada visita.</p>
+            <span class="type-card__link">Generar acuerdo <svg><use href="#i-arrow"/></svg></span>
+          </button>
+
+          <button type="button" class="card type-card" data-type="contratista">
+            <span class="icon-box icon-box--blue"><svg><use href="#i-user"/></svg></span>
+            <h3>Contratista independiente</h3>
+            <p>Aclara el alcance del proyecto, la compensación y que no existe relación laboral.</p>
+            <span class="type-card__link">Generar contrato <svg><use href="#i-arrow"/></svg></span>
+          </button>
+
+          <button type="button" class="card type-card" data-type="personalizado">
+            <span class="icon-box"><svg><use href="#i-pen"/></svg></span>
+            <h3>Contrato personalizado</h3>
+            <p>¿Tu caso no encaja en ninguno? Descríbelo y Drafty arma la estructura desde cero.</p>
+            <span class="type-card__link">Empezar desde cero <svg><use href="#i-arrow"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDICIÓN CON IA ================= -->
+    <section class="section" id="edicion">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__eyebrow">Edición con IA</span>
+          <h2>Mejora cualquier cláusula con un clic</h2>
+          <p>Selecciona un fragmento del contrato y elige qué quieres hacer con él. El resto del documento no se toca.</p>
+        </div>
+
+        <div class="ai-edit">
+          <div class="ai-actions" role="tablist" aria-label="Acciones de IA">
+            <button class="ai-action" role="tab" aria-selected="true" data-action="mejorar">
+              <span class="icon-box"><svg><use href="#i-wand"/></svg></span>
+              <span>
+                <h3>Mejorar redacción</h3>
+                <p>Vuelve el texto más claro y profesional.</p>
+              </span>
+            </button>
+            <button class="ai-action" role="tab" aria-selected="false" data-action="acortar">
+              <span class="icon-box icon-box--blue"><svg><use href="#i-shorten"/></svg></span>
+              <span>
+                <h3>Acortar</h3>
+                <p>Condensa sin perder lo importante.</p>
+              </span>
+            </button>
+            <button class="ai-action" role="tab" aria-selected="false" data-action="alargar">
+              <span class="icon-box icon-box--green"><svg><use href="#i-expand"/></svg></span>
+              <span>
+                <h3>Hacer más largo</h3>
+                <p>Agrega detalle y respaldo legal.</p>
+              </span>
+            </button>
+            <button class="ai-action" role="tab" aria-selected="false" data-action="corregir">
+              <span class="icon-box icon-box--amber"><svg><use href="#i-spell"/></svg></span>
+              <span>
+                <h3>Corregir gramática</h3>
+                <p>Arregla ortografía, puntuación y estructura.</p>
+              </span>
+            </button>
+          </div>
+
+          <div class="doc-preview" aria-live="polite">
+            <span class="doc-preview__label">Vista previa</span>
+            <div class="doc-toolbar" aria-hidden="true">
+              <span data-for="mejorar" class="is-active">Mejorar</span>
+              <span data-for="acortar">Acortar</span>
+              <span data-for="alargar">Alargar</span>
+              <span data-for="corregir">Corregir</span>
+            </div>
+            <h4>CLÁUSULA QUINTA: Forma de pago</h4>
+            <p>
+              <mark id="demo-text">El cliente le va a pagar al proveedor la plata en dos partes, una al principio y otra cuando se termine el trabajo.</mark>
+            </p>
+            <div class="doc-preview__note" id="demo-note" hidden>
+              <svg><use href="#i-check"/></svg>
+              <span>Texto actualizado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BENEFICIOS ================= -->
+    <section class="section section--white">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__eyebrow">Por qué Drafty</span>
+          <h2>Menos tiempo redactando, más tiempo revisando lo que importa</h2>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit">
+            <span class="icon-box"><svg><use href="#i-clock"/></svg></span>
+            <h3>Borradores en segundos</h3>
+            <p>Olvídate de la página en blanco. Empiezas con un contrato completo y estructurado.</p>
+          </div>
+          <div class="benefit">
+            <span class="icon-box icon-box--blue"><svg><use href="#i-target"/></svg></span>
+            <h3>Hecho para tu caso</h3>
+            <p>Usa tus partes, montos y plazos reales en vez de adaptar una plantilla genérica.</p>
+          </div>
+          <div class="benefit">
+            <span class="icon-box icon-box--green"><svg><use href="#i-edit"/></svg></span>
+            <h3>Control total</h3>
+            <p>Cada palabra se puede editar. La IA sugiere, tú decides la versión final.</p>
+          </div>
+          <div class="benefit">
+            <span class="icon-box icon-box--navy"><svg><use href="#i-download"/></svg></span>
+            <h3>Listo para firmar</h3>
+            <p>Descarga en PDF con formato de documento legal, o copia el texto a donde lo necesites.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__eyebrow">Preguntas frecuentes</span>
+          <h2>Lo que la gente suele preguntar</h2>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>¿Qué es un generador de contratos con IA? <svg><use href="#i-plus"/></svg></summary>
+            <p>Es una herramienta que redacta un borrador de contrato a partir de lo que describes. Tú indicas el tipo de acuerdo y los detalles, y la IA arma el documento con la estructura y el lenguaje adecuados.</p>
+          </details>
+          <details>
+            <summary>¿Necesito una plantilla para empezar? <svg><use href="#i-plus"/></svg></summary>
+            <p>No. Puedes escribir tu caso directamente y Drafty genera el contrato desde cero. Elegir un tipo solo ayuda a que la estructura sea más precisa.</p>
+          </details>
+          <details>
+            <summary>¿Puedo editar el contrato después de generarlo? <svg><use href="#i-plus"/></svg></summary>
+            <p>Sí. Todo el documento es editable. Puedes cambiar cualquier palabra a mano o seleccionar un fragmento y usar las acciones de IA para mejorarlo, acortarlo, alargarlo o corregirlo.</p>
+          </details>
+          <details>
+            <summary>¿Qué tan detallada debe ser mi descripción? <svg><use href="#i-plus"/></svg></summary>
+            <p>Con una frase es suficiente para empezar, pero mientras más datos des (nombres de las partes, montos, fechas, entregables) más personalizado sale el borrador.</p>
+          </details>
+          <details>
+            <summary>¿Dónde se guardan mis contratos? <svg><use href="#i-plus"/></svg></summary>
+            <p>En tu propio navegador. Drafty no tiene cuentas ni guarda tus documentos en un servidor, así que solo tú los ves desde este dispositivo.</p>
+          </details>
+          <details>
+            <summary>¿Un contrato de Drafty tiene validez legal? <svg><use href="#i-plus"/></svg></summary>
+            <p>Drafty genera borradores para ahorrarte tiempo, pero no sustituye la asesoría de un abogado. Antes de firmar algo importante, lo recomendable es que un profesional lo revise.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta">
+      <div class="container">
+        <h2>Tu próximo contrato está a una descripción de distancia</h2>
+        <p>Empieza gratis, sin crear cuenta. El primer borrador sale en segundos.</p>
+        <a href="#crear" class="btn btn--primary btn--lg">
+          Crear mi contrato
+          <svg><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div>
+          <a href="/" class="logo">
+            <img class="logo__mark" src="/assets/img/logo.svg" alt="">
+            <span>draft<span class="logo__dot">y</span></span>
+          </a>
+          <p> Redacta, edita y descarga contratos con ayuda de IA.</p>
+        </div>
+        <div>
+          <h4>Producto</h4>
+          <ul>
+            <li><a href="#crear">Crear contrato</a></li>
+            <li><a href="/app.html">Mis contratos</a></li>
+            <li><a href="#edicion">Edición con IA</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contratos</h4>
+          <ul>
+            <li><a href="#tipos">Servicios</a></li>
+            <li><a href="#tipos">Confidencialidad</a></li>
+            <li><a href="#tipos">Contratistas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ayuda</h4>
+          <ul>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+          </ul>
+        </div>
+      </div>
+
+           <div class="site-footer__bottom">
+        <p>© 2026 Drafty Intelligence </p>
+      </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/landing.js"></script>
 </body>
 </html>

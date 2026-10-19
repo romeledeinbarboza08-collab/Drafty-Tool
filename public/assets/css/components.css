@@ -1,0 +1,262 @@
+/* =========================================================
+   Drafty - Componentes reutilizables
+   Botones, tarjetas, badges, logo. Se usan en todas las páginas.
+   ========================================================= */
+
+/* ---------- Logo ---------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+  color: var(--navy-800);
+}
+
+.logo__mark {
+  width: 30px;
+  height: 30px;
+}
+
+.logo__dot {
+  color: var(--primary);
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 42px;
+  padding: 0 var(--sp-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn--dark {
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.btn--dark:hover {
+  background: var(--navy-700);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--gray-700);
+}
+
+.btn--ghost:hover {
+  background: var(--gray-100);
+}
+
+.btn--outline {
+  background: var(--surface);
+  border-color: var(--gray-300);
+  color: var(--navy-800);
+}
+
+.btn--outline:hover {
+  border-color: var(--navy-600);
+}
+
+.btn--lg {
+  height: 52px;
+  padding: 0 var(--sp-8);
+  font-size: var(--fs-base);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--coral-50);
+  color: var(--coral-600);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Encabezado de sección ---------- */
+.section-head {
+  max-width: 720px;
+  margin: 0 auto var(--sp-12);
+  text-align: center;
+}
+
+.section-head__eyebrow {
+  display: block;
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.section-head h2 {
+  font-size: var(--fs-3xl);
+  margin-bottom: var(--sp-4);
+}
+
+.section-head p {
+  font-size: var(--fs-lg);
+  color: var(--text-muted);
+}
+
+/* ---------- Tarjeta ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+}
+
+/* ---------- Icono en caja ---------- */
+.icon-box {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--coral-50);
+  color: var(--primary);
+}
+
+.icon-box svg {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-box--blue  { background: var(--blue-50);  color: var(--blue-500); }
+.icon-box--green { background: var(--green-50); color: var(--green-500); }
+.icon-box--amber { background: var(--amber-50); color: var(--amber-500); }
+.icon-box--navy  { background: var(--gray-100); color: var(--navy-800); }
+
+/* ---------- Caja del prompt (landing y editor) ---------- */
+.prompt-box {
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.prompt-box:focus-within {
+  border-color: var(--navy-600);
+  box-shadow: var(--shadow-lg), 0 0 0 4px rgba(42, 63, 107, 0.08);
+}
+
+.prompt-box__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-4) 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--gray-50);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  transition: all 0.15s var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--gray-300);
+  background: var(--white);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--navy-800);
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.prompt-box textarea {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  padding: var(--sp-4);
+  border: 0;
+  background: transparent;
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  resize: none;
+  outline: none;
+}
+
+.prompt-box textarea::placeholder {
+  color: var(--gray-500);
+}
+
+.prompt-box__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-4);
+  border-top: 1px solid var(--gray-100);
+}
+
+.prompt-box__counter {
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+
+.prompt-box__counter.is-over {
+  color: var(--coral-600);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .section-head h2 {
+    font-size: var(--fs-2xl);
+  }
+
+  .section-head p {
+    font-size: var(--fs-base);
+  }
+}

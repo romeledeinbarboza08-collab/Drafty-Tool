@@ -1,0 +1,721 @@
+/* =========================================================
+   Drafty - Editor (app.html)
+   ========================================================= */
+
+.app {
+  --sidebar-w: 280px;
+  --app-header-h: 60px;
+  min-height: 100vh;
+}
+
+/* ---------- Barra superior ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  height: var(--app-header-h);
+  padding: 0 var(--sp-5);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.app-header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-width: 0;
+  flex: 1;
+}
+
+.app-header__divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.app-header__actions .btn {
+  height: 38px;
+  padding: 0 var(--sp-4);
+}
+
+
+/* Copiar y PDF solo tienen sentido con un contrato abierto */
+body:not([data-vista="doc"]) .needs-doc,
+body.is-generating .needs-doc {
+  display: none;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--gray-700);
+}
+
+.icon-btn:hover {
+  background: var(--gray-100);
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* El botón de menú solo aparece en pantallas pequeñas */
+.app-header__menu {
+  display: none;
+}
+
+/* Título editable */
+.doc-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+  flex: 1;
+}
+
+.doc-meta__title {
+  min-width: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 34px;
+  padding: 0 var(--sp-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--navy-800);
+  text-overflow: ellipsis;
+}
+
+.doc-meta__title:hover:not(:disabled) {
+  border-color: var(--border);
+}
+
+.doc-meta__title:focus {
+  outline: none;
+  border-color: var(--navy-600);
+  background: var(--surface);
+}
+
+.doc-meta__title:disabled {
+  color: var(--text-subtle);
+  font-weight: 500;
+}
+
+.doc-meta__status {
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+
+/* ---------- Estructura ---------- */
+.app-body {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: calc(100vh - var(--app-header-h));
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky;
+  top: var(--app-header-h);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--app-header-h));
+  padding: var(--sp-5) var(--sp-4);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.sidebar__new {
+  width: 100%;
+  margin-bottom: var(--sp-6);
+}
+
+.sidebar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-2) var(--sp-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.sidebar__count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+  background: var(--gray-100);
+  font-size: var(--fs-xs);
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--gray-600);
+}
+
+.contract-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contract-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+}
+
+.contract-item:hover {
+  background: var(--gray-50);
+}
+
+.contract-item.is-active {
+  background: var(--coral-50);
+}
+
+.contract-item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+.contract-item__main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--sp-3) var(--sp-2) var(--sp-3) var(--sp-3);
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.contract-item__title {
+  display: block;
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--navy-800);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contract-item__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+
+.contract-item__tag {
+  font-weight: 500;
+  color: var(--gray-600);
+}
+
+.contract-item__tag::after {
+  content: "·";
+  margin-left: var(--sp-2);
+  color: var(--gray-300);
+}
+
+.contract-item__delete {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: var(--sp-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--gray-500);
+  opacity: 0;
+  transition: opacity 0.15s var(--ease);
+}
+
+.contract-item:hover .contract-item__delete,
+.contract-item__delete:focus-visible {
+  opacity: 1;
+}
+
+.contract-item__delete:hover {
+  background: var(--coral-100);
+  color: var(--coral-600);
+}
+
+.contract-item__delete svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sidebar__empty {
+  padding: var(--sp-8) var(--sp-4);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-subtle);
+}
+
+.sidebar__empty svg {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto var(--sp-3);
+  color: var(--gray-300);
+}
+
+.sidebar__note {
+  margin-top: auto;
+  padding: var(--sp-4) var(--sp-2) 0;
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+
+/* ---------- Área principal ---------- */
+.workspace {
+  min-width: 0;
+  padding: var(--sp-10) var(--sp-6) var(--sp-16);
+}
+
+/* Nuevo contrato */
+.new-view__inner {
+  max-width: 760px;
+  margin: var(--sp-10) auto 0;
+  text-align: center;
+}
+
+.new-view h1 {
+  margin: var(--sp-4) 0 var(--sp-3);
+  font-size: var(--fs-3xl);
+  font-weight: 800;
+}
+
+.new-view__inner > p {
+  margin-bottom: var(--sp-8);
+  color: var(--text-muted);
+}
+
+.tips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3) var(--sp-6);
+  margin-top: var(--sp-6);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.tips strong {
+  color: var(--navy-800);
+}
+
+/* Estado de generación */
+.gen-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  width: fit-content;
+  margin: 0 auto var(--sp-5);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-full);
+  background: var(--navy-800);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- La hoja del contrato ---------- */
+.paper {
+  max-width: 816px;
+  min-height: 1000px;
+  margin: 0 auto;
+  padding: 72px 84px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--gray-900);
+  outline: none;
+}
+
+.paper h1 {
+  margin: 0 0 var(--sp-8);
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--gray-900);
+}
+
+.paper h2 {
+  margin: var(--sp-6) 0 var(--sp-2);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--gray-900);
+}
+
+.paper h3 {
+  margin: var(--sp-4) 0 var(--sp-2);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--gray-900);
+}
+
+.paper p {
+  margin-bottom: var(--sp-3);
+  text-align: justify;
+  hyphens: auto;
+}
+
+.paper ul,
+.paper ol {
+  margin: 0 0 var(--sp-3);
+  padding-left: var(--sp-8);
+}
+
+.paper ul {
+  list-style: disc;
+}
+
+.paper ol {
+  list-style: decimal;
+}
+
+.paper li {
+  margin-bottom: var(--sp-1);
+}
+
+.paper hr {
+  margin: var(--sp-6) 0;
+  border: 0;
+  border-top: 1px solid var(--gray-200);
+}
+
+/* Datos que faltan, como [Nombre del Cliente] */
+.ph {
+  padding: 0 3px;
+  border-radius: 3px;
+  background: var(--coral-50);
+  color: var(--coral-600);
+  font-weight: 600;
+}
+
+.paper[contenteditable="true"]:focus {
+  border-color: var(--gray-300);
+}
+
+/* Cursor que parpadea mientras la IA escribe */
+.paper.is-streaming > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: var(--primary);
+  animation: parpadeo 0.9s steps(2) infinite;
+}
+
+.paper.is-streaming:empty::before {
+  content: "Preparando el borrador…";
+  color: var(--text-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+}
+
+@keyframes parpadeo {
+  50% { opacity: 0; }
+}
+
+.paper.is-refining {
+  cursor: progress;
+}
+
+.paper ::selection {
+  background: #d4e1fb;
+}
+
+/* Fragmento recién editado por la IA */
+.ai-updated {
+  background: var(--green-50);
+  box-shadow: 0 0 0 2px var(--green-50);
+  border-radius: 2px;
+  animation: aparecer 0.4s var(--ease);
+}
+
+@keyframes aparecer {
+  from { background: #c8ecd9; }
+}
+
+.paper-note {
+  max-width: 816px;
+  margin: var(--sp-5) auto 0;
+  font-size: var(--fs-xs);
+  text-align: center;
+  color: var(--text-subtle);
+}
+
+/* ---------- Barra flotante de IA ---------- */
+.ai-toolbar {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  background: var(--navy-800);
+  box-shadow: var(--shadow-lg);
+}
+
+.ai-toolbar[hidden] {
+  display: none;
+}
+
+.ai-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.ai-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+
+.ai-toolbar button:first-child {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.ai-toolbar button:first-child:hover {
+  background: var(--primary-hover);
+}
+
+.ai-toolbar svg {
+  width: 15px;
+  height: 15px;
+}
+
+.ai-toolbar.is-busy button:not(.is-loading) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.ai-toolbar button.is-loading svg {
+  display: none;
+}
+
+.ai-toolbar button.is-loading::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+/* ---------- Error ---------- */
+.error-view__box {
+  max-width: 480px;
+  margin: var(--sp-16) auto 0;
+  padding: var(--sp-10) var(--sp-8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.error-view__box .icon-box {
+  margin: 0 auto var(--sp-5);
+}
+
+.error-view__box h2 {
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-xl);
+}
+
+.error-view__box p {
+  margin-bottom: var(--sp-6);
+  color: var(--text-muted);
+}
+
+.error-view__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-3);
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-6);
+  z-index: 80;
+  max-width: calc(100% - 32px);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-md);
+  background: var(--navy-900);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .paper {
+    padding: 56px 56px;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-body {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header__menu {
+    display: grid;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: var(--app-header-h);
+    left: 0;
+    bottom: 0;
+    z-index: 30;
+    width: min(320px, 86vw);
+    height: auto;
+    box-shadow: var(--shadow-lg);
+    transform: translateX(-105%);
+    transition: transform 0.25s var(--ease);
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .contract-item__delete {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-header {
+    padding: 0 var(--sp-3);
+    gap: var(--sp-2);
+  }
+
+  .app-header__left {
+    gap: var(--sp-2);
+  }
+
+  .app-header .logo span,
+  .app-header__divider,
+  .doc-meta__status,
+  .app-header__actions .btn span {
+    display: none;
+  }
+
+  .app-header__actions .btn {
+    width: 38px;
+    padding: 0;
+  }
+
+  .workspace {
+    padding: var(--sp-6) var(--sp-3) var(--sp-12);
+  }
+
+  .new-view__inner {
+    margin-top: 0;
+  }
+
+  .new-view h1 {
+    font-size: var(--fs-2xl);
+  }
+
+  .paper {
+    min-height: 0;
+    padding: 32px 22px;
+    font-size: 0.98rem;
+  }
+
+  .paper p {
+    text-align: left;
+  }
+
+  .prompt-box__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .prompt-box__footer .btn {
+    width: 100%;
+  }
+
+  .ai-toolbar button {
+    padding: 0 var(--sp-2);
+  }
+}

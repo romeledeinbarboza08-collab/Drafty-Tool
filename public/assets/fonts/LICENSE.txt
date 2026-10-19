@@ -1,0 +1,6 @@
+Liberation Serif
+Copyright (c) 2012 Red Hat, Inc. Licensed under the SIL Open Font License, Version 1.1.
+https://openfontlicense.org
+
+Archivos recortados (subset) a caracteres latinos para que pesen menos.
+Se usan solo para generar el PDF de los contratos.
