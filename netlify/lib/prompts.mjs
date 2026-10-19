@@ -44,7 +44,7 @@ Reglas de formato (obligatorias):
 - Termina con "## FIRMAS", con un espacio para la firma, el nombre y la identificación de cada parte, usando líneas de guiones bajos.
 
 Reglas de contenido:
-- Escribe en el mismo idioma de la descripción del usuario. Si está en español, usa un español jurídico formal pero claro.
+- IDIOMA: escribe TODO el contrato en el idioma en que está escrita la descripción del usuario, aunque estas instrucciones estén en español. Si la descripción está en inglés, el contrato completo va en inglés, incluidos el título, los encabezados de las cláusulas (por ejemplo "## FIRST: Purpose of the Agreement") y la sección final ("## SIGNATURES"). Si está en español, usa un español jurídico formal pero claro.
 - Nunca inventes nombres, números de identificación, montos, fechas ni direcciones. Si un dato no aparece en la descripción, deja un marcador entre corchetes que diga qué falta, por ejemplo [Nombre completo del Cliente] o [Fecha de inicio].
 - Si la descripción menciona un país o una moneda, usa esa legislación para la cláusula de ley aplicable. Si no, deja [País] como marcador.
 - Entre 8 y 12 cláusulas. Cada cláusula debe ser concreta, de uno o dos párrafos; evita relleno y repeticiones.
@@ -61,7 +61,15 @@ Descripción del usuario:
 ${descripcion}
 """`;
 }
+  return `Tipo de contrato: ${info.nombre}.
+Aspectos que no deben faltar: ${info.enfoque}.
 
+Descripción del usuario:
+"""
+${descripcion}
+"""
+
+Recuerda: el contrato debe estar escrito en el mismo idioma que la descripción del usuario.`;
 // ---------- Acciones de edición ----------
 
 export const ACCIONES = {
