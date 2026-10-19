@@ -5,6 +5,7 @@
 // =========================================================
 
 const MARCA_ERROR = "[[DRAFTY_ERROR]]";
+const MARCA_FIN = "[[DRAFTY_FIN]]";
 
 async function leerError(res, mensajePorDefecto) {
   const data = await res.json().catch(() => ({}));
@@ -39,10 +40,17 @@ export async function generarContrato({ tipo, descripcion }, alRecibir, signal) 
       throw new Error("La generación se interrumpió. Intenta de nuevo.");
     }
 
-    alRecibir(texto);
+    alRecibir(texto.replace(MARCA_FIN, ""));
   }
 
-  if (texto.trim().length === 0) {
+  // Sin la marca de fin, el servidor cortó la respuesta a medias
+  if (!texto.includes(MARCA_FIN)) {
+    throw new Error("La IA tardó demasiado y el contrato quedó incompleto. Intenta de nuevo o describe el acuerdo de forma más breve.");
+  }
+
+  texto = texto.replace(MARCA_FIN, "").trim();
+
+  if (texto.length === 0) {
     throw new Error("La IA no devolvió ningún texto. Intenta de nuevo.");
   }
 

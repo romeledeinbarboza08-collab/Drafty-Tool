@@ -53,6 +53,10 @@ export default async (req) => {
         for await (const texto of partes) {
           controller.enqueue(encoder.encode(texto));
         }
+        // Marca de que el contrato llegó completo. Si Netlify corta la
+        // función por tiempo, esta marca nunca llega y el navegador
+        // sabe que el texto quedó incompleto.
+        controller.enqueue(encoder.encode("\n[[DRAFTY_FIN]]"));
       } catch (err) {
         console.error("[drafty] stream cortado", err);
         // Marca especial para que el navegador sepa que algo falló a mitad

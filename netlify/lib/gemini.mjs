@@ -15,29 +15,60 @@ export class GeminiError extends Error {
   }
 }
 
+// Cuánto "piensa" el modelo antes de escribir. Menos razonamiento
+// = respuesta más rápida. Netlify corta las funciones a los 30 s,
+// así que para redactar contratos conviene que piense poco.
+const RAZONAMIENTO_POR_DEFECTO = "low";
+
 function configuracion() {
   const apiKey = Netlify.env.get("GEMINI_API_KEY");
   const modelo = Netlify.env.get("GEMINI_MODEL") || MODELO_POR_DEFECTO;
+  const razonamiento = Netlify.env.get("GEMINI_THINKING") || RAZONAMIENTO_POR_DEFECTO;
 
   if (!apiKey) {
     throw new GeminiError("Falta la variable GEMINI_API_KEY en Netlify.", 500);
   }
 
-  return { apiKey, modelo };
+  return { apiKey, modelo, razonamiento };
 }
 
-function armarPeticion(system, prompt, apiKey) {
+function armarPeticion(system, prompt, apiKey, razonamiento) {
+  const cuerpo = {
+    systemInstruction: { parts: [{ text: system }] },
+    contents: [{ role: "user", parts: [{ text: prompt }] }]
+  };
+
+  if (razonamiento) {
+    cuerpo.generationConfig = { thinkingConfig: { thinkingLevel: razonamiento } };
+  }
+
   return {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "x-goog-api-key": apiKey
     },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: system }] },
-      contents: [{ role: "user", parts: [{ text: prompt }] }]
-    })
+    body: JSON.stringify(cuerpo)
   };
+}
+
+// Hace la petición. Si el modelo configurado no acepta el ajuste de
+// razonamiento (error 400), se reintenta una vez sin ese ajuste.
+async function pedir(url, system, prompt) {
+  const { apiKey, razonamiento } = configuracion();
+
+  let res = await fetch(url, armarPeticion(system, prompt, apiKey, razonamiento));
+
+  if (res.status === 400 && razonamiento) {
+    const detalle = await res.clone().text();
+    if (/thinking/i.test(detalle)) {
+      console.warn("[drafty] el modelo no aceptó thinkingLevel, reintentando sin él");
+      res = await fetch(url, armarPeticion(system, prompt, apiKey, null));
+    }
+  }
+
+  if (!res.ok) await lanzarErrorDe(res);
+  return res;
 }
 
 // Junta el texto de todas las "parts" de la primera respuesta
@@ -53,11 +84,9 @@ async function lanzarErrorDe(res) {
 
 // Respuesta completa de una sola vez (para las acciones de edición)
 export async function generar({ system, prompt }) {
-  const { apiKey, modelo } = configuracion();
+  const { modelo } = configuracion();
 
-  const res = await fetch(`${BASE_URL}/${modelo}:generateContent`, armarPeticion(system, prompt, apiKey));
-  if (!res.ok) await lanzarErrorDe(res);
-
+  const res = await pedir(`${BASE_URL}/${modelo}:generateContent`, system, prompt);
   const data = await res.json();
   return extraerTexto(data);
 }
@@ -66,14 +95,9 @@ export async function generar({ system, prompt }) {
 // la petición, y si todo está bien devuelve un generador que va
 // entregando el texto a medida que llega.
 export async function generarStream({ system, prompt }) {
-  const { apiKey, modelo } = configuracion();
+  const { modelo } = configuracion();
 
-  const res = await fetch(
-    `${BASE_URL}/${modelo}:streamGenerateContent?alt=sse`,
-    armarPeticion(system, prompt, apiKey)
-  );
-  if (!res.ok) await lanzarErrorDe(res);
-
+  const res = await pedir(`${BASE_URL}/${modelo}:streamGenerateContent?alt=sse`, system, prompt);
   return leerEventos(res.body);
 }
 

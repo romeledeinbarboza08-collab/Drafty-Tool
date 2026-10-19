@@ -47,7 +47,7 @@ Reglas de contenido:
 - Escribe en el mismo idioma de la descripción del usuario. Si está en español, usa un español jurídico formal pero claro.
 - Nunca inventes nombres, números de identificación, montos, fechas ni direcciones. Si un dato no aparece en la descripción, deja un marcador entre corchetes que diga qué falta, por ejemplo [Nombre completo del Cliente] o [Fecha de inicio].
 - Si la descripción menciona un país o una moneda, usa esa legislación para la cláusula de ley aplicable. Si no, deja [País] como marcador.
-- Entre 8 y 14 cláusulas. Cada cláusula debe ser concreta; evita relleno y repeticiones.
+- Entre 8 y 12 cláusulas. Cada cláusula debe ser concreta, de uno o dos párrafos; evita relleno y repeticiones.
 - Escribe los montos y plazos importantes en número y en letras cuando el usuario los dé.`;
 
 export function promptContrato(tipo, descripcion) {
